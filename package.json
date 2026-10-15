@@ -1,0 +1,66 @@
+{
+  "name": "@bytive/jewel-try-me",
+  "version": "0.2.8",
+  "description": "Virtual jewelry try-on React component powered by MediaPipe + Gemini.",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/styles.generated.*",
+    "./dist/index.js",
+    "./dist/index.cjs"
+  ],
+  "scripts": {
+    "build:js": "tsup",
+    "build:css": "tailwindcss -i src/styles.css -o dist/styles.css --minify",
+    "build:inject": "node scripts/build-style-injector.mjs",
+    "build": "rm -rf dist && bun run build:css && bun run build:inject && bun run build:js && bun run sync:frontend",
+    "sync:frontend": "rm -rf ../frontend/node_modules/@bytive/jewel-try-me/dist && mkdir -p ../frontend/node_modules/@bytive/jewel-try-me/dist && cp -r dist/* ../frontend/node_modules/@bytive/jewel-try-me/dist/ && cp package.json README.md ../frontend/node_modules/@bytive/jewel-try-me/",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run typecheck && bun run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "react",
+    "virtual-try-on",
+    "jewelry",
+    "mediapipe",
+    "ar",
+    "ecommerce"
+  ],
+  "license": "UNLICENSED",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18",
+    "@mediapipe/tasks-vision": ">=0.10"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "react": "^19",
+    "react-dom": "^19",
+    "@mediapipe/tasks-vision": "^0.10.33",
+    "tailwindcss": "^4",
+    "tsup": "^8",
+    "typescript": "^5"
+  },
+  "author": ""
+}
